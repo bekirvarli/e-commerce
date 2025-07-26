@@ -21,7 +21,7 @@ const HomePage = () => {
       <Blogs />
       <Brands />
       <CampainSingle />
-      <Policy />
+      
       <Footer />
     </React.Fragment>
   );

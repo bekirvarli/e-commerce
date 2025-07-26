@@ -1,18 +1,19 @@
 import React from "react";
 import Header from "../components/Layout/Header/Header";
-import Contact from "../components/Contact/contact";
-import Policy from "../components/Layout/Policy/Policy";
+import Blogs from "../components/Blogs/Blogs";
 import Footer from "../components/Layout/Footer/Footer";
 
-const ContactPages = () => {
+const BlogPage = () => {
   return (
     <React.Fragment>
       <Header />
-      <Contact />
-      
+      <div className="blog-page">
+        <Blogs />
+      </div>
+
       <Footer />
     </React.Fragment>
   );
 };
 
-export default ContactPages;
+export default BlogPage;

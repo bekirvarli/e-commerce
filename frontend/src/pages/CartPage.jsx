@@ -1,18 +1,16 @@
+import Cart from "../components/Cart/Cart";
 import React from "react";
 import Header from "../components/Layout/Header/Header";
-import Contact from "../components/Contact/contact";
-import Policy from "../components/Layout/Policy/Policy";
 import Footer from "../components/Layout/Footer/Footer";
 
-const ContactPages = () => {
+const CartPage = () => {
   return (
     <React.Fragment>
       <Header />
-      <Contact />
-      
+      <Cart/>
       <Footer />
     </React.Fragment>
   );
 };
 
-export default ContactPages;
+export default CartPage;
