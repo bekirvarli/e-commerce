@@ -11,7 +11,6 @@
   justify-content: space-between;
 }
 
-/* responsive */
 
 @media (max-width: 768px) {
   .site-main {

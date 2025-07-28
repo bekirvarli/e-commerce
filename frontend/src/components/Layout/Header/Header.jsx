@@ -1,7 +1,8 @@
-import  "./Header.css";
+import "./Header.css";
 
+import Proptypes from "prop-types";
 
-const Header = () => {
+const Header = ({ setIsSearchShow }) => {
   return (
     <header>
       <div className="global-notification">
@@ -9,7 +10,7 @@ const Header = () => {
           <p>
             SUMMER SALE FOR ALL SWIM SUITS AND FREE EXPRESS INTERNATIONAL
             DELIVERY - OFF 50%!
-            <a href="shop.html">  SHOP NOW</a>
+            <a href="shop.html"> SHOP NOW</a>
           </p>
         </div>
       </div>
@@ -190,7 +191,10 @@ const Header = () => {
                 <a href="account.html" className="header-account">
                   <i className="bi bi-person"></i>
                 </a>
-                <button className="search-button">
+                <button
+                  className="search-button"
+                  onClick={() => setIsSearchShow(true)}
+                >
                   <i className="bi bi-search"></i>
                 </button>
                 <a href="#">
@@ -212,3 +216,8 @@ const Header = () => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  setIsSearchShow : Proptypes.func,
+}
+

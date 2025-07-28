@@ -1,4 +1,4 @@
-/*! comment item start  */
+
 
 .tab-panel-reviews .comment-star {
   display: flex;
@@ -39,9 +39,7 @@
 .tab-panel-reviews .comment-description p {
   font-size: 14px;
 }
-/*! comment item end  */
 
-/*! comment form start  */
 
 .tab-panel-reviews span.required {
   color: #e51414;
@@ -126,4 +124,4 @@
   cursor: pointer;
 }
 
-/*! comment form end  */
+
