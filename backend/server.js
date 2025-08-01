@@ -2,6 +2,7 @@
   const mongoose = require("mongoose");
   const dotenv =  require("dotenv");
   const app = express();
+  const logger = require("morgan");
   const mainRoute = require("./routes/index.js")
   const port = 5000;
 
@@ -16,6 +17,10 @@
       throw error;
     }
   }
+
+  // middlewares (dönüşüm)
+app.use(logger("dev"));
+  app.use(express.json()); // gelen tüm verileri jsn formatına çevir
 
   app.use("/api", mainRoute);
   
