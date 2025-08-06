@@ -7,6 +7,8 @@ const categoryRoute = require("./categories.js");
 const AuthRoute = require("./auth.js");
 
 const couponRoute = require("./coupons.js");
+const userRoute = require("./users.js");
+
 
 // her rotayı ilgili yol alında kullanıyoruz
 
@@ -14,6 +16,8 @@ router.use("/categories", categoryRoute);
 router.use("/auth", AuthRoute);
 router.use("/products", productRoute);
 router.use("/coupons", couponRoute);
+router.use("/users", userRoute);
+
 
 
 

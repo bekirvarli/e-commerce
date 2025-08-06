@@ -1,4 +1,3 @@
-
 import React from "react";
 import HomePage from "./pages/HomePage";
 import "./App.css";
@@ -13,6 +12,10 @@ import { Route, Routes } from "react-router-dom";
 import BlogPage from "./pages/BlogPage";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import UserPage from "./pages/Admin/UserPage";
+import CategoryPage from "./pages/Admin/Categories/CategoryPage";
+import UpdateCategoryPage from "./pages/Admin/Categories/UpdateCategoryPage";
+import CreateCategoryPage from "./pages/Admin/Categories/CreateCategoryPage";
 function App() {
   return (
     <Routes>
@@ -24,6 +27,15 @@ function App() {
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/blog/:id" element={<BlogDetailsPage />} />
+      <Route path="/admin/*">
+        <Route path="users" element={<UserPage />} />
+        <Route path="categories" element={<CategoryPage />} />
+        <Route path="categories/update/:id" element={<UpdateCategoryPage />} />
+        <Route path="categories/create" element={<CreateCategoryPage />} />
+
+
+
+      </Route>
     </Routes>
   );
 }
