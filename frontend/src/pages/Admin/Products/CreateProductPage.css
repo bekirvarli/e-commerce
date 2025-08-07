@@ -1,0 +1,6 @@
+.ql-editor {
+  min-height: 150px;
+  padding-bottom: 20px; /* Altına boşluk bırak */
+    overflow-y: auto;
+
+}

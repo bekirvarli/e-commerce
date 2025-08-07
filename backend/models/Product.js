@@ -23,6 +23,7 @@ const ProductSchema = mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    
   },
   {
     timestamps: true,

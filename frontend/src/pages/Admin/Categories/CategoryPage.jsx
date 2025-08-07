@@ -97,7 +97,7 @@ const CategoryPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [apiUrl]);
+  }, [apiUrl,messageApi]);
 
   const deleteCategory= async (categoryId) => {
 
