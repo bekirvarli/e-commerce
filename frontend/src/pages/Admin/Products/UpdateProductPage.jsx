@@ -17,7 +17,6 @@ import "./CreateProductPage.css";
 const UpdateProductPage = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [singleProduct, setSingleProduct] = useState([]);
 
   const [form] = Form.useForm();
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -29,22 +28,23 @@ const UpdateProductPage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [categoiresResponse, singleProductResponse] = await Promise.all([
+        const [categoriesResponse, singleProductResponse] = await Promise.all([
           fetch(`${apiUrl}/api/categories`),
           fetch(`${apiUrl}/api/products/${productId}`),
         ]);
 
-        if (!categoiresResponse.ok || !singleProductResponse.ok) {
+        if (!categoriesResponse.ok || !singleProductResponse.ok) {
           messageApi.error("Veri getirme başarısız");
+          setLoading(false);
+          return;
         }
 
         const [categoriesData, singleProductData] = await Promise.all([
-          categoiresResponse.json(),
+          categoriesResponse.json(),
           singleProductResponse.json(),
         ]);
 
         setCategories(categoriesData);
-        setSingleProduct(singleProductData);
 
         if (singleProductData) {
           form.setFieldsValue({
@@ -103,8 +103,6 @@ const UpdateProductPage = () => {
         }),
       });
       if (response.ok) {
-        //const data = await response.json();
-        //console.log("Sunucudan dönen hata :",data);
         messageApi.success("Ürün başarıyla güncellendi.");
         form.resetFields();
       } else {

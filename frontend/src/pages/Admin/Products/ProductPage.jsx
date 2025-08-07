@@ -37,9 +37,9 @@ const ProductPage = () => {
       title: "Fiyat",
       dataIndex: "price",
       key: "price",
-      render: (text) => <span>{text.current.toFixed(2)}</span>,
+      render: (text) => <span>{text.current.toFixed(2)} ₺</span>,
     },
-     {
+    {
       title: "İndirim",
       dataIndex: "price",
       key: "price",
@@ -90,8 +90,8 @@ const ProductPage = () => {
       if (response.ok) {
         messageApi.success("Ürün başarıyla silindi.");
         setDataSource((prevProducts) => {
-          return prevProducts.filter((product) => product._id!== productId)
-        })
+          return prevProducts.filter((product) => product._id !== productId);
+        });
       } else {
         messageApi.error("Silme işlemi başarısız.");
       }
@@ -129,7 +129,6 @@ const ProductPage = () => {
           return {
             ...product,
             categoryName: category ? category.name : "",
-            
           };
         });
         setDataSource(productsWithCategories);
