@@ -1,8 +1,9 @@
 import ProductsItem from "./ProductsItem";
-import productData from "../../data.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
+import { message } from "antd";
+
 
 import "./Products.css";
 
@@ -30,10 +31,35 @@ function PrevBtn({onClick}) {
 
 const Products = () => {
     
-    
+  const [messageApi, contextHolder] = message.useMessage();
 
 
-  const [products] = useState(productData);
+
+  const [products, setProducts] = useState([]);
+
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  
+  
+    useEffect(() => {
+        const fetchProducts = 
+      async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/categories`);
+  
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          messageApi.error("Kullanıcılar alınamadı!");
+        }
+      } catch (error) {
+        console.error("API Hatası:", error);
+        messageApi.error("Sunucu hatası oluştu!");
+      }
+    }
+    fetchProducts()
+      
+    }, [apiUrl,messageApi])
 
   const sliderSetting = {
     dots: false,
@@ -60,6 +86,9 @@ const Products = () => {
     ]
   };
   return (
+
+    <>
+    {contextHolder}
     <section className="products">
       
       <div className="container">
@@ -71,7 +100,7 @@ const Products = () => {
           <div className="glide__track" data-glide-el="track">
             <Slider {...sliderSetting}>
               {products.map((product) => (
-                <ProductsItem productItem={product} key={product.id} />
+                <ProductsItem productItem={product} key={product._id} />
               ))}
             </Slider>
           </div>
@@ -79,6 +108,9 @@ const Products = () => {
         </div>
       </div>
     </section>
+    
+    </>
+    
   );
 };
 

@@ -4,11 +4,11 @@ import "./Categories.css";
 import { message } from "antd";
 
 const Categories = () => {
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [categories, setCategories] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 
   useEffect(() => {
