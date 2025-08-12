@@ -91,7 +91,7 @@ const Info = ({ singleProduct }) => {
                 addToCart({
                   ...singleProduct,
                   price: discountedPrice,
-                  quantity: parseInt(quantityRef.currenty.value),
+                  quantity: parseInt(quantityRef.current.value),
                 })
               }
             >

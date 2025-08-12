@@ -105,6 +105,8 @@ const UpdateProductPage = () => {
       if (response.ok) {
         //const data = await response.json();
         //console.log("Sunucudan dönen hata :",data);
+        console.log(singleProduct);
+        
         messageApi.success("Ürün başarıyla güncellendi.");
         form.resetFields();
       } else {

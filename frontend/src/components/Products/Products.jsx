@@ -1,116 +1,98 @@
-import ProductsItem from "./ProductsItem";
 import { useEffect, useState } from "react";
+import ProductItem from "./ProductItem";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
+import "./Products.css";
 import { message } from "antd";
 
-
-import "./Products.css";
-
-function NextBtn({onClick}) {
+function NextBtn({ onClick }) {
   return (
-  <button className="glide__arrow glide__arrow--right" onClick={onClick}>
-    <i className="bi bi-chevron-right"></i>
-  </button>
+    <button className="glide__arrow glide__arrow--right" onClick={onClick}>
+      <i className="bi bi-chevron-right"></i>
+    </button>
   );
 }
+
 NextBtn.propTypes = {
   onClick: PropTypes.func,
-}
-PrevBtn.propTypes = {
-  onClick: PropTypes.func,
-}
+};
 
-function PrevBtn({onClick}) {
+function PrevBtn({ onClick }) {
   return (
-  <button className="glide__arrow glide__arrow--left" onClick={onClick} >
-    <i className="bi bi-chevron-left"></i>
-  </button>
+    <button className="glide__arrow glide__arrow--left" onClick={onClick}>
+      <i className="bi bi-chevron-left"></i>
+    </button>
   );
 }
 
+PrevBtn.propTypes = {
+  onClick: PropTypes.func,
+};
+
 const Products = () => {
-    
-  const [messageApi, contextHolder] = message.useMessage();
-
-
-
   const [products, setProducts] = useState([]);
 
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  
-  
-    useEffect(() => {
-        const fetchProducts = 
-      async () => {
+
+  useEffect(() => {
+    const fetchProducts = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/categories`);
-  
+        const response = await fetch(`${apiUrl}/api/products`);
+
         if (response.ok) {
           const data = await response.json();
           setProducts(data);
         } else {
-          messageApi.error("Kullanıcılar alınamadı!");
+          message.error("Veri getirme başarısız.");
         }
       } catch (error) {
-        console.error("API Hatası:", error);
-        messageApi.error("Sunucu hatası oluştu!");
+        console.log("Veri hatası:", error);
       }
-    }
-    fetchProducts()
-      
-    }, [apiUrl,messageApi])
+    };
+    fetchProducts();
+  }, [apiUrl]);
 
-  const sliderSetting = {
+  const sliderSettings = {
     dots: false,
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
     nextArrow: <NextBtn />,
     prevArrow: <PrevBtn />,
-    autoplaySpeed:3000,
+    autoplaySpeed: 3000,
     autoplay: true,
-    responsive : [
+    responsive: [
       {
         breakpoint: 992,
-        settings:{
-          slidesToShow:2
+        settings: {
+          slidesToShow: 2,
         },
       },
       {
         breakpoint: 520,
-        settings:{
-          slidesToShow:1,
+        settings: {
+          slidesToShow: 1,
         },
-      }
-    ]
+      },
+    ],
   };
-  return (
 
-    <>
-    {contextHolder}
+  return (
     <section className="products">
-      
       <div className="container">
         <div className="section-title">
           <h2>Featured Products</h2>
           <p>Summer Collection New Morden Design</p>
         </div>
         <div className="product-wrapper product-carousel">
-          <div className="glide__track" data-glide-el="track">
-            <Slider {...sliderSetting}>
-              {products.map((product) => (
-                <ProductsItem productItem={product} key={product._id} />
-              ))}
-            </Slider>
-          </div>
-          
+          <Slider {...sliderSettings}>
+            {products.map((product) => (
+              <ProductItem productItem={product} key={product._id} />
+            ))}
+          </Slider>
         </div>
       </div>
     </section>
-    
-    </>
-    
   );
 };
 

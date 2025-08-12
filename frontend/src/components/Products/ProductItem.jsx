@@ -1,23 +1,22 @@
-import { useContext } from "react";
-import "./ProductsItem.css";
 import PropTypes from "prop-types";
+import { useContext } from "react";
 import { CartContext } from "../../context/CartProvider";
-//import { useNavigate } from "react-router-dom";
-import {Link} from "react-router-dom"
+import "./ProductItem.css";
+import { Link } from "react-router-dom";
 
 const ProductItem = ({ productItem }) => {
   const { cartItems, addToCart } = useContext(CartContext);
 
-  //const navigate = useNavigate();
-
   const filteredCart = cartItems.find(
-    (cartItems) => cartItems._id === productItem._id
+    (cartItem) => cartItem._id === productItem._id
   );
 
-  // indriimli fiyatı hesaplama
-const originalPrice = productItem.price.current;
-const discountPercentage = productItem.price.discount;
-  const discountedPrice = originalPrice - (originalPrice * discountPercentage) /100;
+  const originalPrice = productItem.price.current;
+  const discountPercentage = productItem.price.discount;
+
+  // İndirimli fiyatı hesaplama
+  const discountedPrice =
+    originalPrice - (originalPrice * discountPercentage) / 100;
 
   return (
     <div className="product-item glide__slide glide__slide--active">
@@ -49,21 +48,19 @@ const discountPercentage = productItem.price.discount;
           </li>
         </ul>
         <div className="product-prices">
-          <strong className="new-price">
-            ${discountedPrice.toFixed(2)}
-          </strong>
-          <span className="old-price">
-            ${originalPrice.toFixed(2)}
-          </span>
+          <strong className="new-price">${discountedPrice.toFixed(2)}</strong>
+          <span className="old-price">${originalPrice.toFixed(2)}</span>
         </div>
         <span className="product-discount">-{productItem.price.discount}%</span>
         <div className="product-links">
           <button
             className="add-to-cart"
-            onClick={() => addToCart({
-              ...productItem,
-              price:discountPercentage,
-            })}
+            onClick={() =>
+              addToCart({
+                ...productItem,
+                price: discountedPrice,
+              })
+            }
             disabled={filteredCart}
           >
             <i className="bi bi-basket-fill"></i>
@@ -71,12 +68,7 @@ const discountPercentage = productItem.price.discount;
           <button>
             <i className="bi bi-heart-fill"></i>
           </button>
-          <Link
-            to={`product/${productItem._id}`}
-            className="product-link"
-            
-            
-          >
+          <Link to={`product/${productItem._id}`} className="product-link">
             <i className="bi bi-eye-fill"></i>
           </Link>
           <a href="#">
