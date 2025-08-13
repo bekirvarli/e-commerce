@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { message } from "antd";
 
-const ReviewForm = ({ singleProduct }) => {
+const ReviewForm = ({ singleProduct , setSingleProduct }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
@@ -25,7 +25,7 @@ const ReviewForm = ({ singleProduct }) => {
         {
           text: review,
           rating: parseInt(rating),
-          user: user.id,
+          user: user.id || user._id ,
         },
       ],
     };
@@ -44,7 +44,7 @@ const ReviewForm = ({ singleProduct }) => {
       }
 
       const data = await res.json();
-      console.log(data);
+      setSingleProduct(data);
       setReview("");
       setRating(0);
       messageApi.success("Yorum başarıyla eklendi.");

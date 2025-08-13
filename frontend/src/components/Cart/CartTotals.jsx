@@ -15,6 +15,8 @@ const subTotals = cartItemTotals.reduce((previousValue,currentValue) =>
   return previousValue + currentValue;
 },0);
 
+
+
 const cargoFee = 15;
 const cartTotals = fastCargoChecked ? (subTotals + cargoFee).toFixed(2) : subTotals.toFixed(2);
 
