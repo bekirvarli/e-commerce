@@ -4,7 +4,8 @@ import Breadcrumb from "./Breadcrumb/Breadcrumb";
 import Gallery from "./Gallery/Gallery";
 import Info from "./Info/Info";
 import Tabs from "./Tabs/Tabs";
-const ProductDetails = () => {
+import PropTypes from "prop-types";
+const ProductDetails = ({singleProduct, setSingleProduct}) => {
   return (
     <section className="single-product">
       <div className="container">
@@ -13,15 +14,20 @@ const ProductDetails = () => {
 
           <div className="single-content">
             <main className="site-main">
-              <Gallery />
-              <Info />
+              <Gallery singleProduct={singleProduct} />
+              <Info singleProduct={singleProduct} />
             </main>
           </div>
-          <Tabs />
+          <Tabs singleProduct ={singleProduct} setSingleProduct={setSingleProduct} />
         </div>
       </div>
     </section>
   );
 };
-
+ 
 export default ProductDetails;
+
+ProductDetails.propTypes = {
+  singleProduct : PropTypes.object,
+  setSingleProduct: PropTypes.func
+}

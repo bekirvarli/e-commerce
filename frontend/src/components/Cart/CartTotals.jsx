@@ -6,7 +6,7 @@ const CartTotals = () => {
   const{cartItems} = useContext(CartContext);
   const cartItemTotals = cartItems.map((item)=>
   {
-    const itemTotal = item.price.newPrice * item.quantity;
+    const itemTotal = item.price * item.quantity;
     return itemTotal
   });
 
@@ -14,6 +14,8 @@ const subTotals = cartItemTotals.reduce((previousValue,currentValue) =>
 {
   return previousValue + currentValue;
 },0);
+
+
 
 const cargoFee = 15;
 const cartTotals = fastCargoChecked ? (subTotals + cargoFee).toFixed(2) : subTotals.toFixed(2);
