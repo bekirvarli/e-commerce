@@ -1,69 +1,136 @@
 import "./Search.css";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import { message } from "antd";
+//import { search } from "../../../../../backend/routes/products";
+import { useState } from "react";
 const Search = ({ isSearchShow, setIsSearchShow }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [searchResults, setSearchResults] = useState(null);
+
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+
+  const handleCloseModal =() => {
+    setIsSearchShow(false);
+    setSearchResults(null);
+  }
+
+
+
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    
+
+
+
+
+    const productName = e.target[0].value;
+
+    if(productName.trim().length === 0) {
+
+      messageApi.warning("Boş karakter arayamazsınız!")
+      return;
+
+    }
+    try {
+      const res = await fetch(`${apiUrl}/api/products/search/${productName.trim()}`);
+      if (!res.ok) {
+        messageApi.error("Ürün getirme hatası");
+        return;
+      }
+      const data = await res.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div className={`modal-search ${isSearchShow ? "show" : ""}`}>
-      <div className="modal-wrapper">
-        <h3 className="modal-title">Search for products</h3>
-        <p className="modal-text">
-          Start typing to see products you are looking for.
-        </p>
-        <form className="search-form">
-          <input type="text" placeholder="Search a product" />
-          <button>
-            <i className="bi bi-search"></i>
-          </button>
-        </form>
-        <div className="search-results">
-          <div className="search-heading">
-            <h3>RESULTS FROM PRODUCT</h3>
+    <>
+      {contextHolder}
+
+      <div className={`modal-search ${isSearchShow ? "show" : ""}`}>
+        <div className="modal-wrapper">
+          <h3 className="modal-title">Search for products</h3>
+          <p className="modal-text">
+            Start typing to see products you are looking for.
+          </p>
+          <form className="search-form" onSubmit={handleSearch}>
+            <input type="text" placeholder="Search a product" />
+            <button>
+              <i className="bi bi-search"></i>
+            </button>
+          </form>
+          <div className="search-results">
+            <div className="search-heading">
+              <h3>RESULTS FROM PRODUCT</h3>
+            </div>
+            <div
+              className="results"
+              style={{
+                display: `${searchResults?.length === 0 || !searchResults    ? "flex" : "grid"}`,
+              }}
+            >
+              {" "}
+              {!searchResults && (
+                <b className="result-item"
+                style={{
+                    justifyContent: "center",
+                    width: "100%",
+                  }}>
+                  Ürün Ara
+                </b>
+              )}
+              {searchResults?.length === 0 && (
+                <a
+                  href="#"
+                  className="result-item"
+                  style={{
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  😞 Aradığız Sayfa Bulunamadı 😞
+                </a>
+              )}
+              {searchResults?.length > 0 &&
+                searchResults?.map((resultItem) => (
+                  <a href="#" className="result-item" key={resultItem._id}>
+                    <img
+                      src={resultItem.img[0]}
+                      className="search-thumb"
+                      alt=""
+                    />
+                    <div className="search-info">
+                      <h4>{resultItem.name}</h4>
+                      <span className="search-sku">SKU: PD0016</span>
+                      <span className="search-price">
+                        ${resultItem.price.current.toFixed(2)}
+                      </span>
+                    </div>
+                  </a>
+                ))}
+            </div>
           </div>
-          <div className="results">
-            <a href="#" className="result-item">
-              <img
-                src="img/products/product1/1.png"
-                className="search-thumb"
-                alt=""
-              />
-              <div className="search-info">
-                <h4>Analogue Resin Strap</h4>
-                <span className="search-sku">SKU: PD0016</span>
-                <span className="search-price">$108.00</span>
-              </div>
-            </a>
-            <a href="#" className="result-item">
-              <img
-                src="img/products/product2/1.png"
-                className="search-thumb"
-                alt=""
-              />
-              <div className="search-info">
-                <h4>Analogue Resin Strap</h4>
-                <span className="search-sku">SKU: PD0016</span>
-                <span className="search-price">$108.00</span>
-              </div>
-            </a>
-          </div>
+          <i
+            className="bi bi-x-circle"
+            id="close-search"
+            onClick={handleCloseModal}
+          ></i>
         </div>
-        <i
-          className="bi bi-x-circle"
-          id="close-search"
-          onClick={() => setIsSearchShow(false)}
-        ></i>
+        <div
+          className="modal-overlay"
+          onClick={handleCloseModal}
+        ></div>
       </div>
-      <div
-        className="modal-overlay"
-        onClick={() => setIsSearchShow(false)}
-      ></div>
-    </div>
+    </>
   );
 };
 
 export default Search;
 
 Search.propTypes = {
-    isSearchShow: PropTypes.bool,
-    setIsSearchShow : PropTypes.func,
+  isSearchShow: PropTypes.bool,
+  setIsSearchShow: PropTypes.func,
 };
-
-
