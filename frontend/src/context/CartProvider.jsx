@@ -28,14 +28,14 @@ const CartProvider = ({ children }) => {
 
       {
 
-        return cartItem.id !== itemId;
+        return cartItem._id !== itemId;
       });
     
     setCartItems(filteredCartItems);
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart,removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, setCartItems, addToCart,removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
@@ -48,37 +48,3 @@ CartProvider.propTypes = {
 export { CartContext }; // export'u sona aldık
 export default CartProvider;
 
-// import { createContext, useState } from "react";
-// import PropTypes from "prop-types";
-
-// export const CartContext = createContext();
-
-// //  export default CartContext;
-
-// const CartProvider = ({children}) =>
-// {
-//     const [cartItems, setCartItems] = useState([]);
-//     const addToCart = (cartItem) => {
-//     // setCartItems ([...cartItems,product]);
-//       setCartItems((prevCart) => [...prevCart,cartItem]);
-
-//   };
-//     return (
-//         <CartContext.Provider
-//             value={{
-//                 cartItems,
-//                 addToCart,
-
-//             }}
-//             >
-//             {children}
-//         </CartContext.Provider>
-
-//     )
-
-// }
-
-// CartProvider.propTypes ={
-//     children : PropTypes.node,
-// }
-// export default CartProvider;
